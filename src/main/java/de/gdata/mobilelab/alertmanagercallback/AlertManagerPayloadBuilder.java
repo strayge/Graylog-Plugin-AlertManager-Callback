@@ -90,18 +90,6 @@ class AlertManagerPayloadBuilder {
     private Map<String, Object> extractAnnotations() {
         Map<String, Object> annotations = new HashMap<>();
 
-        if(stream != null && stream.getTitle() != null) {
-            annotations.put("stream_title", stream.getTitle());
-        }
-
-        if(checkResult != null) {
-            annotations.put("triggered_at", checkResult.getTriggeredAt() != null ? checkResult.getTriggeredAt().toString() : null);
-            if(checkResult.getTriggeredCondition() != null) {
-                annotations.put("triggered_rule_description", checkResult.getTriggeredCondition().getDescription());
-                annotations.put("triggered_rule_title", checkResult.getTriggeredCondition().getTitle());
-            }
-        }
-
         // custom annotations
         final String customAnnotationString = configuration != null ? configuration.getString(AlertManagerAlarmCallback.CONFIGURATION_KEY_CUSTOM_ANNOTATIONS) : null;
         try {
