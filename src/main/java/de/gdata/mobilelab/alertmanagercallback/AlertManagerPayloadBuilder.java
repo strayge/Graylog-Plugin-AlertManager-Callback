@@ -120,6 +120,21 @@ class AlertManagerPayloadBuilder {
 
         int delay = checkResult.getTriggeredCondition().getGrace();
 
+        int customGrace = -1;
+        if (configuration != null) {
+            try {
+                customGrace = Integer.parseInt(
+                    configuration.getString(AlertManagerAlarmCallback.CONFIGURATION_KEY_GRACE, "-1")
+                );
+            } catch (Exception e) {
+                System.out.println("Invalid grace period specified");
+            }
+        }
+
+        if (customGrace != -1) {
+            delay = customGrace;
+        }
+
         // when grace is 0, the next alert isn't for another minute
         if(delay == 0) {
             delay += 1;

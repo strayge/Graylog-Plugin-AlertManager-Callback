@@ -23,6 +23,7 @@ public class AlertManagerAlarmCallback implements AlarmCallback {
     static final String CONFIGURATION_KEY_ALERT_NAME = "alertmanager_alert_name";
     static final String CONFIGURATION_KEY_CUSTOM_LABELS = "alertmanager_custom_labels";
     static final String CONFIGURATION_KEY_CUSTOM_ANNOTATIONS = "alertmanager_custom_annotations";
+    static final String CONFIGURATION_KEY_GRACE = "alertmanager_grace";
 
     private Configuration configuration;
     private AlertManagerPostRequestSender alertManagerPostRequestSender;
@@ -91,6 +92,16 @@ public class AlertManagerAlarmCallback implements AlarmCallback {
                 Optional.OPTIONAL
         );
         configurationRequest.addField(customAnnotations);
+
+        // Grace period
+        ConfigurationField graceField = new TextField(
+                CONFIGURATION_KEY_GRACE,
+                "Custom grace period",
+                "-1",
+                "Custom grace period (in minutes) for notification (-1 for disable).",
+                Optional.OPTIONAL
+        );
+        configurationRequest.addField(graceField);
 
         return configurationRequest;
     }
